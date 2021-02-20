@@ -38,21 +38,64 @@ function findLongestWord(arrayOfWords) {
   return longestWord;
 }
 
-findLongestWord(words);
-
 // Iteration #3: Calculate the sum
 
 const numbers = [6, 12, 1, 18, 13, 16, 2, 1, 8, 10];
-
-function sumNumbers(arr) {
+/**
+ * return the sum of all number in array of number, if no number in array return 0
+ *
+ * @param {number[]} arrayOfNumber
+ * @returns {number} sum or zero
+ */
+function sumNumbers(arrayOfNumber) {
+  if (arrayOfNumber.length === 0) {
+    return 0;
+  }
   let sum = 0;
-  for (let i = 0; i < arr.length; i++) {
-    sum += arr[i];
+  for (const number of arrayOfNumber) {
+    sum += number;
   }
   return sum;
 }
+/// Bonus iteration #3 : Calculate sum with polymorphism
+/**
+ * return sum of an array with mixed value of string, number and boolean
+ * according to these rules:
+ * number = number value,
+ * string = string length,
+ * true = 1,
+ * false = 0
+ * return an error if object or array inside the mixedArray
+ *
+ * @param {string|number|boolean[]} mixedArray
+ * @returns {number|Error}
+ */
+function sum(mixedArray) {
+  if (mixedArray.length === 0) {
+    return 0;
+  }
+  let sum = 0;
+  for (const value of mixedArray) {
+    let type = typeof value;
+    switch (type) {
+      case "number":
+        sum += value;
+        break;
+      case "string":
+        sum += value.length;
+        break;
+      case "boolean":
+        if (value) {
+          sum++;
+        }
+        break;
 
-sumNumbers(numbers);
+      default:
+        throw new Error("Unsupported data type sir or ma'am");
+    }
+  }
+  return sum;
+}
 
 // Iteration #4: Calculate the average
 // Level 1: Array of numbers

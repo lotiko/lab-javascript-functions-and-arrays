@@ -240,6 +240,25 @@ const wordsCount = [
   "disobedience",
   "matter",
 ];
+/**
+ * counts the number of times a value is present in one array
+ *
+ * @param {mixed[]} array
+ * @param {string|number|boolean} valueToCount
+ * @returns
+ */
+function howManyTimes(array, valueToCount) {
+  let count = 0;
+  if (array.length === 0) {
+    return count;
+  }
+  for (const value of array) {
+    if (value === valueToCount) {
+      count++;
+    }
+  }
+  return count;
+}
 
 // Iteration #8: Bonus
 

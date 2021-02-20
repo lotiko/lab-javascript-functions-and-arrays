@@ -186,6 +186,19 @@ const wordsUnique = [
   "simple",
   "bring",
 ];
+/**
+ * create array with unique value of one mixed array
+ *
+ * @param {mixed[]} array
+ * @returns
+ */
+function uniquifyArray(array) {
+  if (array.length === 0) {
+    return null;
+  }
+  let uniqueVal = new Set(array);
+  return [...uniqueVal];
+}
 
 // Iteration #6: Find elements
 const wordsFind = [

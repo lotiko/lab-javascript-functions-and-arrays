@@ -284,3 +284,118 @@ const matrix = [
   [20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54],
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48],
 ];
+/**
+ * Find greatest product of four adjacent numbers in a matrix.
+ * We consider adjacent any four numbers that are next to each other horizontally or vertically.
+ *
+ * @param {number[][]} matrix
+ * @returns {number}
+ */
+function greatestProduct(matrix) {
+  if (matrix.length < 4 && matrix[0].length < 4) {
+    // the matrix must be at least 4 in width or length else no game!
+    throw new Error("The matrix must contain at least 4 row or 4 column");
+  }
+  let maxProduct = 0;
+  for (let iRow = 0; iRow < matrix.length; iRow++) {
+    //loop on ligne
+    const row = matrix[iRow];
+    for (let iCol = 0; iCol < row.length; iCol++) {
+      // loop on col of ligne
+      // console.log(iRow, iCol);
+      let currentProduct;
+      switch (
+        true //
+      ) {
+        case iRow < matrix.length - 5:
+          currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "DOWN");
+          currentProduct === 0 || (currentProduct > maxProduct && (maxProduct = currentProduct));
+        // no break here because we check all direction if possible
+        case iCol < matrix[iRow].length - 5:
+          currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "RIGTH");
+          currentProduct === 0 || (currentProduct > maxProduct && (maxProduct = currentProduct));
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+  return maxProduct;
+}
+/**
+ * compute product of four number in a matrix with base number position and direction
+ * to find three other
+ *
+ * @param {number[][]} matrix
+ * @param {object} position { row: number, col: number }
+ * @param {string} direction "DOWN" or "RIGTH" or "DIAG_L" or "DIAG_R"
+ * @returns {number}
+ */
+function computeProduct(matrix, position, direction) {
+  // console.log(position);
+  let rowStart = position.row;
+  let colStart = position.col;
+  let val1, val2, val3, val4;
+
+  if (direction === "DOWN") {
+    val1 = matrix[rowStart][colStart];
+    val2 = matrix[rowStart + 1][colStart];
+    val3 = matrix[rowStart + 2][colStart];
+    val4 = matrix[rowStart + 3][colStart];
+  }
+  if (direction === "RIGTH") {
+    val1 = matrix[rowStart][colStart];
+    val2 = matrix[rowStart][colStart + 1];
+    val3 = matrix[rowStart][colStart + 2];
+    val4 = matrix[rowStart][colStart + 3];
+  }
+  if (direction === "DIAG_R") {
+    val1 = matrix[rowStart][colStart];
+    val2 = matrix[rowStart + 1][colStart + 1];
+    val3 = matrix[rowStart + 2][colStart + 2];
+    val4 = matrix[rowStart + 3][colStart + 3];
+  }
+  if (direction === "DIAG_L") {
+    val1 = matrix[rowStart][colStart];
+    val2 = matrix[rowStart + 1][colStart - 1];
+    val3 = matrix[rowStart + 2][colStart - 2];
+    val4 = matrix[rowStart + 3][colStart - 3];
+  }
+  return val1 * val2 * val3 * val4;
+}
+
+// Bonus - Iteration #8.1: Product of diagonals
+/**
+ * Find greatest product of four diagonal adjacent numbers in a matrix.
+ *
+ * @param {number[][]} matrix
+ * @returns {number}
+ */
+function greatestProductOfDiagonals() {
+  if (matrix.length < 4 && matrix[0].length < 4) {
+    throw new Error("The matrix must contain at least 4 row or 4 column");
+  }
+  let maxProduct = 0;
+  for (let iRow = 0; iRow < matrix.length; iRow++) {
+    const row = matrix[iRow];
+    for (let iCol = 0; iCol < row.length; iCol++) {
+      // console.log(iRow, iCol);
+      let currentProduct;
+      switch (true) {
+        case iRow < matrix.length - 5 && iCol < matrix[iRow].length - 5:
+          currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "DIAG_R");
+          currentProduct === 0 || (currentProduct > maxProduct && (maxProduct = currentProduct));
+
+        case iCol < matrix[iRow].length - 5 && iCol > 3:
+          currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "RIGTH");
+          currentProduct === 0 || (currentProduct > maxProduct && (maxProduct = currentProduct));
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+  return maxProduct;
+}

@@ -1,6 +1,18 @@
+/*
+ * @author lotik
+ * @date 02/2021
+ *
+ * ironHack course lab-javascript-basic-algorithms
+ *
+ */
 // Iteration #1: Find the maximum
+/**
+ * return the greatest number of the two parameter
+ * @param {number} nb1
+ * @param {number} nb2
+ */
 function maxOfTwoNumbers(nb1, nb2) {
-  if (nb1 > nb2) {
+  if (nb1 >= nb2) {
     return nb1;
   } else {
     return nb2;

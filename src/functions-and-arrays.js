@@ -100,18 +100,18 @@ function sum(mixedArray) {
 // Iteration #4: Calculate the average
 // Level 1: Array of numbers
 const numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
-
-function averageNumbers(arr) {
-  // return null if empty arr
-  if (arr.length === 0) {
+/**
+ * return the average of array number
+ *
+ * @param {number[]} arrayOfNumber
+ * @returns {?number}
+ */
+function averageNumbers(arrayOfNumber) {
+  if (arrayOfNumber.length === 0) {
     return null;
   }
-  let sum = sumNumbers(arr);
-  let denominator = arr.length;
-  return sum / denominator;
+  return sumNumbers(arrayOfNumber) / arrayOfNumber.length;
 }
-
-averageNumbers(numbersAvg);
 
 // Level 2: Array of strings
 const wordsArr = [
@@ -126,24 +126,51 @@ const wordsArr = [
   "fuel",
   "palace",
 ];
-
-function averageWordLength(arr) {
-  // return null if empty arr
-  if (arr.length === 0) {
+/**
+ * make average of all length of string in an array with only string.
+ *
+ * @param {string[]} arrayOfString
+ * @returns {number} the average length of words in the arrayOfString parameter
+ */
+function averageWordLength(arrayOfString) {
+  if (arrayOfString.length === 0) {
     return null;
   }
-  //sum up the length of each word
-  let sum = 0;
-  for (let i = 0; i < arr.length; i++) {
-    sum += arr[i].length;
+  ////// TODO test pour chaque mauvais type
+  for (const str of arrayOfString) {
+    if (typeof str !== "string") {
+      throw new Error(
+        `Parameter must contain only string but it contain at least one ${typeof str} `
+      );
+    }
   }
-  //number of words in the array
-  let denominator = arr.length;
-  //return result
-  return sum / denominator;
+  return sum(arrayOfString) / arrayOfString.length;
 }
-
-averageWordLength(wordsArr);
+// Bonus - Iteration #4.1: A generic `avg()` function
+/**
+ * make average of all value in array
+ * according to these rules:
+ * number = number value,
+ * string = string length,
+ * true = 1,
+ * false = 0
+ * return false if object or array inside the mixedArray
+ *
+ * @param {string|number|boolean} mixedArray
+ * @returns {number}
+ */
+function avg(mixedArray) {
+  if (mixedArray.length === 0) {
+    return null;
+  }
+  /// TODO test pour le catch voir si renvoi bien false
+  try {
+    // return (Math.round(sum(mixedArray) / mixedArray.length) * 100) / 100;
+    return Math.round((sum(mixedArray) / mixedArray.length) * 100) / 100;
+  } catch (error) {
+    return false;
+  }
+}
 
 // Iteration #5: Unique arrays
 const wordsUnique = [

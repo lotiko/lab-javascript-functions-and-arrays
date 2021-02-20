@@ -211,6 +211,20 @@ const wordsFind = [
   "truth",
   "disobedience",
 ];
+/**
+ * check if a word exist in array
+ *
+ * @param {string[]} array
+ * @param {string} wordsToFind
+ * @returns
+ */
+function doesWordExist(array, wordsToFind) {
+  if (array.length === 0) {
+    return null;
+  }
+  let uniqueVal = new Set(array);
+  return uniqueVal.has(wordsToFind);
+}
 
 // Iteration #7: Count repetition
 const wordsCount = [

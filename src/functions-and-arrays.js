@@ -309,8 +309,6 @@ function greatestProduct(matrix) {
         currentProduct > maxProduct && (maxProduct = currentProduct);
         // currentProduct !== 1 && console.log(currentProduct, iRow, iCol, "DOWN");
       }
-
-      // no break here because we check all direction if possible
       if (iCol <= matrix[iRow].length - 4) {
         currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "RIGTH");
         currentProduct > maxProduct && (maxProduct = currentProduct);
@@ -348,22 +346,18 @@ function computeProduct(matrix, position, direction) {
     val4 = matrix[rowStart][colStart + 3];
   }
   if (direction === "DIAG_R") {
-    console.log("D_R");
-
     val1 = matrix[rowStart][colStart];
     val2 = matrix[rowStart + 1][colStart + 1];
     val3 = matrix[rowStart + 2][colStart + 2];
     val4 = matrix[rowStart + 3][colStart + 3];
-    console.log(val1, val2, val3, val4, "D_R");
   }
   if (direction === "DIAG_L") {
-    console.log("D_l");
     val1 = matrix[rowStart][colStart];
     val2 = matrix[rowStart + 1][colStart - 1];
     val3 = matrix[rowStart + 2][colStart - 2];
     val4 = matrix[rowStart + 3][colStart - 3];
-    console.log(val1, val2, val3, val4, "D_l");
   }
+  console.log(val1, val2, val3, val4, val1 * val2 * val3 * val4);
   return val1 * val2 * val3 * val4;
 }
 

@@ -303,21 +303,18 @@ function greatestProduct(matrix) {
     for (let iCol = 0; iCol < row.length; iCol++) {
       // loop on col of ligne
       // console.log(iRow, iCol);
-      let currentProduct;
-      switch (
-        true //
-      ) {
-        case iRow < matrix.length - 5:
-          currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "DOWN");
-          currentProduct === 0 || (currentProduct > maxProduct && (maxProduct = currentProduct));
-        // no break here because we check all direction if possible
-        case iCol < matrix[iRow].length - 5:
-          currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "RIGTH");
-          currentProduct === 0 || (currentProduct > maxProduct && (maxProduct = currentProduct));
-          break;
+      let currentProduct = 0;
+      if (iRow <= matrix.length - 4) {
+        currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "DOWN");
+        currentProduct > maxProduct && (maxProduct = currentProduct);
+        // currentProduct !== 1 && console.log(currentProduct, iRow, iCol, "DOWN");
+      }
 
-        default:
-          break;
+      // no break here because we check all direction if possible
+      if (iCol <= matrix[iRow].length - 4) {
+        currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "RIGTH");
+        currentProduct > maxProduct && (maxProduct = currentProduct);
+        // currentProduct !== 1 && console.log(currentProduct, iRow, iCol, "RIGTH", matrix[iRow].length - 4);
       }
     }
   }
@@ -351,16 +348,21 @@ function computeProduct(matrix, position, direction) {
     val4 = matrix[rowStart][colStart + 3];
   }
   if (direction === "DIAG_R") {
+    console.log("D_R");
+
     val1 = matrix[rowStart][colStart];
     val2 = matrix[rowStart + 1][colStart + 1];
     val3 = matrix[rowStart + 2][colStart + 2];
     val4 = matrix[rowStart + 3][colStart + 3];
+    console.log(val1, val2, val3, val4, "D_R");
   }
   if (direction === "DIAG_L") {
+    console.log("D_l");
     val1 = matrix[rowStart][colStart];
     val2 = matrix[rowStart + 1][colStart - 1];
     val3 = matrix[rowStart + 2][colStart - 2];
     val4 = matrix[rowStart + 3][colStart - 3];
+    console.log(val1, val2, val3, val4, "D_l");
   }
   return val1 * val2 * val3 * val4;
 }
@@ -372,7 +374,7 @@ function computeProduct(matrix, position, direction) {
  * @param {number[][]} matrix
  * @returns {number}
  */
-function greatestProductOfDiagonals() {
+function greatestProductOfDiagonals(matrix) {
   if (matrix.length < 4 && matrix[0].length < 4) {
     throw new Error("The matrix must contain at least 4 row or 4 column");
   }
@@ -382,18 +384,14 @@ function greatestProductOfDiagonals() {
     for (let iCol = 0; iCol < row.length; iCol++) {
       // console.log(iRow, iCol);
       let currentProduct;
-      switch (true) {
-        case iRow < matrix.length - 5 && iCol < matrix[iRow].length - 5:
-          currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "DIAG_R");
-          currentProduct === 0 || (currentProduct > maxProduct && (maxProduct = currentProduct));
+      if (iRow <= matrix.length - 4 && iCol <= matrix[iRow].length - 4) {
+        currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "DIAG_R");
+        currentProduct > maxProduct && (maxProduct = currentProduct);
+      }
 
-        case iCol < matrix[iRow].length - 5 && iCol > 3:
-          currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "RIGTH");
-          currentProduct === 0 || (currentProduct > maxProduct && (maxProduct = currentProduct));
-          break;
-
-        default:
-          break;
+      if (iRow <= matrix.length - 4 && iCol >= 3) {
+        currentProduct = computeProduct(matrix, { row: iRow, col: iCol }, "DIAG_L");
+        currentProduct > maxProduct && (maxProduct = currentProduct);
       }
     }
   }
